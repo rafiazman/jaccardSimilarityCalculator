@@ -11,20 +11,15 @@ namespace SimilarityCalculator.Calculators
         /// <summary>Initializes a new instance of the <see cref="MinHashCalculator"/> class.</summary>
         /// <param name="documents">The documents to compare similarity.</param>
         /// <param name="numberOfHashFunctions">The number of MinHash functions.</param>
-        /// <param name="similarityThreshold">The similarity threshold.</param>
-        /// <param name="r">The r value/the row size of b band</param>
-        /// <param name="k">The size of the bucket used when hashing MinHash bands</param>
-        public MinHashCalculator(IList<Document> documents, int numberOfHashFunctions, decimal similarityThreshold, int r, int k)
+        public MinHashCalculator(IList<Document> documents, int numberOfHashFunctions)
         {
             Documents = documents;
             NumberOfHashFunctions = numberOfHashFunctions;
-            SimilarityThreshold = similarityThreshold;
         }
 
         private Func<int, int>[] HashFunctions { get; set; }
         private IList<Document> Documents { get; }
         private int NumberOfHashFunctions { get; }
-        private decimal SimilarityThreshold { get; }
 
         public (List<(int leftDocumentId, int rightDocumentId, decimal similarity)> similarities, decimal avgSimilarity) CalculateSimilarity()
         {
