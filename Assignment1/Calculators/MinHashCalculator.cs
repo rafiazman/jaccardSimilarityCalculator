@@ -105,7 +105,7 @@ namespace SimilarityCalculator.Calculators
         
         public double[,] GetMinHashSignatureMatrix(int[,] boolMatrix)
         {
-            InitialiseHashFunctions(boolMatrix.GetLength(0));
+            HashFunctions = HashFunctionGenerator.Generate(NumberOfHashFunctions, boolMatrix.GetLength(0));
 
             var minHashStopwatch = Stopwatch.StartNew();
             double[,] minHashes = new double[HashFunctions.Length, boolMatrix.GetLength(1)];
@@ -144,20 +144,6 @@ namespace SimilarityCalculator.Calculators
             minHashStopwatch.Stop();
 
             return minHashes;
-        }
-        
-        private void InitialiseHashFunctions(int universalSetSize)
-        {
-            Random rnd = new Random();
-            HashFunctions = new Func<int, int>[NumberOfHashFunctions];
-
-            for (int i = 0; i < NumberOfHashFunctions; i++)
-            {
-                var a = rnd.Next(0, universalSetSize);
-                var b = rnd.Next(0, universalSetSize);
-
-                HashFunctions[i] = x => { return (a * x + b) % universalSetSize; };
-            }
         }
     }
 }
